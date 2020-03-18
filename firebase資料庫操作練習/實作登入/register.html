@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="author" content="Kodinger">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>My Login Page &mdash; Bootstrap 4 Login Page Snippet</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="css/my-login.css">
+</head>
+
+<body class="my-login-page">
+	<section class="h-100">
+		<div class="container h-100">
+			<div class="row justify-content-md-center h-100">
+				<div class="card-wrapper">
+					<div class="brand">
+						<img src="img/logo.jpg" alt="bootstrap 4 login page">
+					</div>
+					<div class="card fat">
+						<div class="card-body">
+							<h4 class="card-title">Register</h4>
+							<form method="POST" class="my-login-validation" novalidate="">
+								<div class="form-group">
+									<label for="name">Name</label>
+									<input id="name" type="text" class="form-control" name="name" required autofocus>
+									<div class="invalid-feedback">
+										What's your name?
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="email">E-Mail Address</label>
+									<input id="email" type="email" class="form-control" name="email" required>
+									<div class="invalid-feedback">
+										Your email is invalid
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="password">Password</label>
+									<input id="password" type="password" class="form-control" name="password" required data-eye>
+									<div class="invalid-feedback">
+										Password is required
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="custom-checkbox custom-control">
+										<input type="checkbox" name="agree" id="agree" class="custom-control-input" required="">
+										<label for="agree" class="custom-control-label">I agree to the <a href="#">Terms and
+												Conditions</a></label>
+										<div class="invalid-feedback">
+											You must agree with our Terms and Conditions
+										</div>
+									</div>
+								</div>
+
+								<div class="form-group m-0">
+									<button id="submit" type="button" class="btn btn-primary btn-block">
+										Register
+									</button>
+								</div>
+								<div class="mt-4 text-center">
+									Already have an account? <a href="index.html">Login</a>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div class="footer">
+						Copyright &copy; 2017 &mdash; Your Company
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="js/my-login.js"></script> -->
+
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+
+	<script>
+		// Your web app's Firebase configuration
+		var firebaseConfig = {
+			apiKey: "AIzaSyB-l8rU_pSHEq9dvnjlA_syJRwp9bZMA1A",
+			authDomain: "my-project-83952.firebaseapp.com",
+			databaseURL: "https://my-project-83952.firebaseio.com",
+			projectId: "my-project-83952",
+			storageBucket: "my-project-83952.appspot.com",
+			messagingSenderId: "587905279977",
+			appId: "1:587905279977:web:c397c01c7993c116500d78",
+			measurementId: "G-JC1EHSKEM3"
+		};
+		// Initialize Firebase
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+    // debugger;
+	</script>
+
+
+
+	<script>
+		let email = document.getElementById('email');
+		let password = document.getElementById('password');
+		let submit = document.getElementById('submit');
+		var user;
+
+		// 登出功能
+		firebase.auth().signOut().then(function () {
+			var user = firebase.auth().currentUser;
+			console.log(user, '您被逐出紫禁城了')
+		})
+
+		firebase.auth().onAuthStateChanged(function (user) {
+			if (user) {
+				console.log(user, '5秒後刪除帳號');
+				// 刪除帳號
+				user.delete().then(function () {
+					alert('你幫娘娘梳頭時不小心弄痛娘娘，被娘娘的掌事太監丟到井裡淹死了')
+				})
+
+			} else {
+				console.log(user, '狀態變更的時候!????')
+			}
+		});
+
+
+
+
+
+
+		// 檢查登入狀態
+		setInterval(() => {
+
+			if (user) {
+				// User is signed in.
+				console.log('有登入!更改狀態!!', user)
+				// 更新帳號狀態!但是有些屬性不能改
+				user.updateProfile({
+					displayName: "new_hbdoy",
+					photoURL: "https://hbdoy.tw/profile.jpg",
+					email:"ddd@gmail.com"
+				})
+					.then(() => {
+
+					})
+					.catch((error) => {
+
+					});
+			} else {
+				// No user is signed in.
+				console.log('沒登入= =', user)
+			}
+		}, 1000);
+		submit.addEventListener('click', function (e) {
+			e.preventDefault();
+			// 註冊功能
+			// firebase.auth().createUserWithEmailAndPassword(email.value, password.value).then(function(res){
+			// 	console.log(res);
+			// }).catch(function(res){
+			// 	console.log(res);
+			// })
+
+			//登入功能
+			firebase.auth().signInWithEmailAndPassword(email.value, password.value)
+				.then((res) => {
+					user = firebase.auth().currentUser;
+					if (user) {
+						console.log('登入成功', user)
+					}
+				})
+				.catch((error) => {
+					console.log(error.message);
+				});
+		})
+	</script>
+</body>
+
+</html>

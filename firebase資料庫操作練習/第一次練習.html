@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <!-- Insert these scripts at the bottom of the HTML, but before you use any Firebase services -->
+
+  <!-- Firebase App (the core Firebase SDK) is always required and must be listed first -->
+  <!-- <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase.js"></script> -->
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-app.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-firestore.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.11.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyB-l8rU_pSHEq9dvnjlA_syJRwp9bZMA1A",
+      authDomain: "my-project-83952.firebaseapp.com",
+      databaseURL: "https://my-project-83952.firebaseio.com",
+      projectId: "my-project-83952",
+      storageBucket: "my-project-83952.appspot.com",
+      messagingSenderId: "587905279977",
+      appId: "1:587905279977:web:c397c01c7993c116500d78",
+      measurementId: "G-JC1EHSKEM3"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    // debugger;
+  </script>
+  <script>
+    window.addEventListener('load', function () {
+      // var firestore = firebase.firestore();
+      var database = firebase.database();
+
+      // set 取代路徑下的所有資料
+      // database.ref("/chinese/Bob").set({
+      //   "grade": 80
+      // })
+      //   .then(function () {
+      //     console.log("建立成功");
+      //   }).catch(function (e) {
+      //     console.log(e);
+      //   });
+
+      //　也可以像這樣寫進去
+      // var myGrade = {
+      //   chinese: {
+      //     Bob: {
+      //       grade: 55
+      //     }
+      //   },
+      //   name: 'asdadasd'
+      // }
+      // database.ref("/").set(myGrade)
+      //   .then(function () {
+      //     console.log("建立成功");
+      //   }).catch(function (e) {
+      //     console.log(e);
+      //   });
+
+
+      // // update 更新部分資料的方法
+      // var myGrade2 = {
+      //   grade2: 10,
+      //   grade3: 20
+      // }
+      // 會自動新增進入的路徑
+      // database.ref("/chinese/lee").update(myGrade2);
+
+      // // push 新增一筆帶隨機key值的資料　也可以使用陣列方式
+      // database.ref("/content").push("你好嗎");
+
+      // database.ref("/content").push({
+      //   name : '悠咪',
+      //   age  : 33
+      // });
+
+      // 這兩個都可以刪除
+      // database.ref("/chinese/Bob/grade3").set({});
+      // 依照應該用下面的
+      // database.ref("/chinese/Bob/grade2").remove();
+
+      // 取得一次最新資料
+      // database.ref("chinese/Bob").once('value', function (result) {
+      //   var data = result.val();
+      //   console.log(data);
+      // });
+
+      // 先取得最新資料後在後台待命，一旦有資料更新就會繼續取得最新資料
+      // database.ref("chinese/Bob").on('value', function (result) {
+      //   console.log(result.val());
+      // });
+
+      // 進行資料排序
+      // 排序一個物件下多個不同key名的value
+      // database.ref("chinese/Bob").orderByValue().once('value', function (result) {
+      //   console.log(result.val())
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val());
+      //   })
+      // });
+
+      // 依照key值排序  但是看不出什麼效果＝　＝
+      // database.ref("chinese/").orderByKey().once('value', function (result) {
+      //   console.log(result.val())
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val());
+      //   })
+      // });
+
+      // 排序不同 key {"grade"} 物件下同一個key名的value
+      // database.ref("chinese").orderByChild("grade").once('value', function (result) {
+      //   console.log(result.val())
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val().grade);
+      //   })
+      // });
+
+      //下條件查詢　　大於　６０　小於　１００
+      // database.ref("chinese").orderByChild("grade").startAt(60).endAt(100).once('value', function (result) {
+      //   console.log(result.val())
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val().grade);
+      //   })
+      // });
+      // 等於 ８０
+      // database.ref("chinese").orderByChild("grade").equalTo(80).once('value', function (result) {
+      //   console.log(result.val())
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val().grade);
+      //   })
+      // });
+      // limitToFirst 查看第 X 筆資料　這邊因為先排序了所以第一筆資料是最低分
+      // database.ref("chinese").orderByChild("grade").limitToFirst(1).once('value', function (result) {
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val().grade);
+      //   })
+      // });
+      // limitToLast 查看最後 X 筆資料　這邊因為先排序了所以最後一筆資料是最高分
+      // database.ref("chinese").orderByChild("grade").limitToLast(1).once('value', function (result) {
+      //   result.forEach(function (item) {
+      //     console.log(item.key + " " + item.val().grade);
+      //   })
+      // });
+    })
+  </script>
+</body>
+
+</html>
